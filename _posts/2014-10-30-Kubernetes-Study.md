@@ -36,3 +36,96 @@ slave(称作minion)运行两个组件：
 ###工作流
 上文已经提到了Kubernetes中最基本的三个操作对象：pod, replicationController及service。 下面分别从它们的对象创建出发，通过时序图 来描述Kubernetes各个组件之间的交互及其工作流。
 ![Kubernetes工作流](https://github.com/tragicjun/tragicjun.github.com/blob/master/images/kubernetesWorkflow.png)
+
+###使用示例
+最后，让我们进入实战模式，这里跑一个最简单的单机示例(所有组件运行在一台机器上)，旨在打通基本流程。
+####搭建环境
+第一步，我们需要Kuberntes各组件的二进制可执行文件。有以下两种方式获取：
+- 下载源代码自己编译：
+```bash
+git clone https://github.com/GoogleCloudPlatform/kubernetes.git  
+cd kubernetes/build  
+./release.sh  
+```
+- 直接下载人家已经编译打包好的tar文件：
+```bash
+wget https://storage.googleapis.com/kubernetes/binaries.tar.gz  
+```
+自己编译源码需要先安装好golang，编译完之后在kubernetes/_output/release-tars文件夹下可以得到打包文件。直接下载的方式不需要安装其他软件，但可能得不到最新的版本。
+
+第二步，我们还需要etcd的二进制可执行文件，通过如下方式获取：
+```bash
+wget https://github.com/coreos/etcd/releases/download/v0.4.6/etcd-v0.4.6-linux-amd64.tar.gz  
+tar xvf etcd-v0.4.6-linux-amd64.tar.gz  
+```
+
+第三步，就可以启动各个组件了：
+etcd
+```bash
+cd etcd-v0.4.6-linux-amd64  
+./etcd  
+```
+apiserver
+```bash
+./apiserver \  
+-address=127.0.0.1 \  
+-port=8080 \  
+-portal_net="172.0.0.0/16" \  
+-etcd_servers=http://127.0.0.1:4001 \  
+-machines=127.0.0.1 \  
+-v=3 \  
+-logtostderr=false \  
+-log_dir=./log 
+```
+scheduler
+```bash
+./scheduler -master 127.0.0.1:8080 \  
+-v=3 \  
+-logtostderr=false \  
+-log_dir=./log  
+```
+kubelet
+```bash
+./kubelet \  
+-address=127.0.0.1 \  
+-port=10250 \  
+-hostname_override=127.0.0.1 \  
+-etcd_servers=http://127.0.0.1:4001 \  
+-v=3 \  
+-logtostderr=false \  
+-log_dir=./log  
+```
+####创建pod
+搭好了运行环境后，就可以提交pod了。首先编写pod描述文件，保存为redis.json：
+```json
+{  
+  "id": "redis",  
+  "desiredState": {  
+    "manifest": {  
+      "version": "v1beta1",  
+      "id": "redis",  
+      "containers": [{  
+        "name": "redis",  
+        "image": "dockerfile/redis",  
+        "imagePullPolicy": "PullIfNotPresent",  
+        "ports": [{  
+          "containerPort": 6379,  
+          "hostPort": 6379  
+        }]  
+      }]  
+    }  
+  },  
+  "labels": {  
+    "name": "redis"  
+  }  
+}  
+```
+然后，通过命令行工具kubecfg提交：
+```bash
+./kubecfg -c redis.json create /pods  
+```
+提交完后，通过kubecfg查看pod状态：
+```bash
+./kubecfg list /pods  
+```
+如果Status是Running，就表示pod已经在容器里运行起来了，可以用"docker ps"命令来查看容器信息。

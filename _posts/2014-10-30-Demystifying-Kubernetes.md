@@ -239,4 +239,4 @@ ID                  Image(s)            Selector            Replicas
 redisController     dockerfile/redis    name=redis          1
 ```
 
-同时，1个pod也自动创建好了，即使故意删除该pod，replicationController将保证创建新的pod。
+同时，1个pod也自动创建好了，即使故意删除该pod，replicationController将保证创建1个新pod。

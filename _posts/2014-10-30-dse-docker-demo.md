@@ -1,4 +1,4 @@
-**Build docker image for dse**
+**Build image for dse**
 
 Dockerfile
 
@@ -6,7 +6,19 @@ Dockerfile
 FROM tegdsf/centos
 RUN svn checkout http://tc-svn.tencent.com/doss/doss_openapi_rep/openapi_proj/trunk/commons/DSE /root/dse-trunk
 RUN cd /root/dse-trunk; mvn package
-RUN mv /root/dse-trunk/release/dse-1.0.3 /root
+RUN rm /root/dse-trunk/release/*.tar
+RUN mv /root/dse-trunk/release/dse-* /root
+RUN chmod +x /root/dse-*/bin/start.sh
+RUN chmod +x /root/dse-*/bin/kill.sh
 RUN rm -r /root/dse-trunk
 RUN rm -r /tmp/mavenRepository
+```
+
+**Build image for dse service**
+```text
+FROM tegdsf/dse:1.0.3
+RUN svn checkout http://tc-svn.tencent.com/doss/doss_openapi_rep/openapi_proj/trunk/service/dse-service-demo /root/dse-service-demo
+RUN cd /root/dse-service-demo; mvn compile;
+RUN mv WEB-INF /root/dse-1.0.3/apps/demo/WEB-INF;
+ENTRYPOINT ["/root/dse-1.0.3/bin/start.sh"]
 ```

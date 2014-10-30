@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Kubernetes初探（一）
+title: Kubernetes初探
 published: true
 ---
 
@@ -28,10 +28,11 @@ master运行三个组件：
 - **controller-manager**：负责执行各种控制器，目前有两类：
     - endpoint-controller：定期关联service和pod(关联信息由endpoint对象维护)，保证service到pod的映射总是最新的。
     - replication-controller：定期关联replicationController和pod，保证replicationController定义的复制数量与实际运行pod的数量总是一致的。
+    
 slave(称作minion)运行两个组件：
 - **kubelet**：负责管控docker容器，如启动/停止、监控运行状态等。它会定期从etcd获取分配到本机的pod，并根据pod信息启动或停止相应的容器。同时，它也会接收apiserver的HTTP请求，汇报pod的运行状态。
 - **proxy**：负责为pod提供代理。它会定期从etcd获取所有的service，并根据service信息创建代理。当某个客户pod要访问其他pod时，访问请求会经过本机proxy做转发。
 
 ###工作流
 上文已经提到了Kubernetes中最基本的三个操作对象：pod, replicationController及service。 下面分别从它们的对象创建出发，通过时序图 来描述Kubernetes各个组件之间的交互及其工作流。
-
+![Kubernetes工作流](https://github.com/tragicjun/tragicjun.github.com/blob/master/images/kubernetesWorkflow.png)

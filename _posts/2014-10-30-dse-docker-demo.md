@@ -1,4 +1,7 @@
-*Build docker image for dse*
+**Build docker image for dse**
+
+Dockerfile
+
 ```text
 FROM tegdsf/centos
 RUN svn checkout http://tc-svn.tencent.com/doss/doss_openapi_rep/openapi_proj/trunk/commons/DSE /root/dse-trunk

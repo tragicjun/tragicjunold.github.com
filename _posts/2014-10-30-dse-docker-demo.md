@@ -16,11 +16,13 @@ RUN rm -r /tmp/mavenRepository
 
 **Build image for dse service**
 ```text
-FROM tegdsf/dse:1.0.2
+FROM tegdsf/dse:1.0.3
 RUN svn checkout http://tc-svn.tencent.com/doss/doss_openapi_rep/openapi_proj/trunk/service/dse-service-demo /root/dse-service-demo
-RUN cd /root/dse-service-demo; mvn compile;
-RUN mv WEB-INF /root/dse-1.0.2/apps/demo/WEB-INF;
+RUN cd /root/dse-service-demo; mvn compile
+RUN mkdir /root/dse-1.0.3/apps/demo
+RUN mv WEB-INF /root/dse-1.0.3/apps/demo
 RUN rm -r /root/dse-service-demo
 RUN rm -r /tmp/mavenRepository
-ENTRYPOINT ["/root/dse-1.0.2/bin/start.sh"]
+EXPOSE 19800
+ENTRYPOINT ["/root/dse-1.0.3/bin/start.sh"]
 ```

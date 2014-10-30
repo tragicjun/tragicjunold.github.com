@@ -84,6 +84,7 @@ tar xvf etcd-v0.4.6-linux-amd64.tar.gz
 ```
 
 第三步，就可以启动各个组件了：
+
 etcd
 ```bash
 cd etcd-v0.4.6-linux-amd64  

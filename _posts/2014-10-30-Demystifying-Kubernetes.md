@@ -191,3 +191,52 @@ Status是Running表示pod已经在容器里运行起来了，可以用"docker ps
 CONTAINER ID        IMAGE                     COMMAND                CREATED             STATUS              PORTS                    NAMES
 ae83d1e4b1ec        dockerfile/redis:latest   "redis-server /etc/r   19 seconds ago      Up 19 seconds                                k8s_redis.caa18858_redis.default.etcd_1414684622_1b43fe35
 ```
+
+####创建replicationController
+
+```json
+{
+    "id": "redisController",
+    "apiVersion": "v1beta1",
+    "kind": "ReplicationController",
+    "desiredState": {
+      "replicas": 1,
+      "replicaSelector": {"name": "redis"},
+      "podTemplate": {
+        "desiredState": {
+           "manifest": {
+             "version": "v1beta1",
+             "id": "redisController",
+             "containers": [{
+               "name": "redis",
+               "image": "dockerfile/redis",
+               "imagePullPolicy": "PullIfNotPresent",
+               "ports": [{
+                   "containerPort": 6379,
+                   "hostPort": 6379
+               }]
+             }]
+           }
+         },
+         "labels": {"name": "redis"}
+        }},
+    "labels": {"name": "redis"}
+  }
+```
+
+然后，通过命令行工具kubecfg提交：
+
+```bash
+./kubecfg -c redisController.json create /replicationControllers 
+```
+
+提交完后，通过kubecfg查看replicationController状态：
+
+```bash
+# ./kubecfg list /replicationControllers
+ID                  Image(s)            Selector            Replicas
+----------          ----------          ----------          ----------
+redisController     dockerfile/redis    name=redis          1
+```
+
+同时，1个pod也自动创建好了，即使故意删除该pod，replicationController将保证创建新的pod。

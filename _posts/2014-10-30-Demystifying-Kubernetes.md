@@ -56,19 +56,25 @@ slave(称作minion)运行两个组件：
 ![Kubernetes工作流](https://github.com/tragicjun/tragicjun.github.com/blob/master/images/kubernetesWorkflow.png)
 
 ###使用示例
+
 最后，让我们进入实战模式，这里跑一个最简单的单机示例(所有组件运行在一台机器上)，旨在打通基本流程。
+
 ####搭建环境
+
 第一步，我们需要Kuberntes各组件的二进制可执行文件。有以下两种方式获取：
+
 - 下载源代码自己编译：
 ```bash
 git clone https://github.com/GoogleCloudPlatform/kubernetes.git  
 cd kubernetes/build  
 ./release.sh  
 ```
+
 - 直接下载人家已经编译打包好的tar文件：
 ```bash
 wget https://storage.googleapis.com/kubernetes/binaries.tar.gz  
 ```
+
 自己编译源码需要先安装好golang，编译完之后在kubernetes/_output/release-tars文件夹下可以得到打包文件。直接下载的方式不需要安装其他软件，但可能得不到最新的版本。
 
 第二步，我们还需要etcd的二进制可执行文件，通过如下方式获取：
@@ -114,6 +120,7 @@ kubelet
 -log_dir=./log  
 ```
 ####创建pod
+
 搭好了运行环境后，就可以提交pod了。首先编写pod描述文件，保存为redis.json：
 ```json
 {  
@@ -139,11 +146,14 @@ kubelet
 }  
 ```
 然后，通过命令行工具kubecfg提交：
+
 ```bash
 ./kubecfg -c redis.json create /pods  
 ```
+
 提交完后，通过kubecfg查看pod状态：
 ```bash
 ./kubecfg list /pods  
 ```
+
 如果Status是Running，就表示pod已经在容器里运行起来了，可以用"docker ps"命令来查看容器信息。

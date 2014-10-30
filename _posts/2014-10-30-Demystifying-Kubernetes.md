@@ -9,6 +9,7 @@ Kubernetes是Google开源的容器集群管理系统。它构建于docker技术�
 
 ###总体概览
 如下图所示是我初步阅读文档和源代码之后整理的总体概览，基本上可以从如下三个维度来认识Kubernetes。
+
 ![Kubernetes概览](https://github.com/tragicjun/tragicjun.github.com/blob/master/images/Kubernetes.png)
 ###操作对象
 Kubernetes以RESTFul形式开放接口，用户可操作的REST对象有三个：

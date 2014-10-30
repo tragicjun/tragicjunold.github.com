@@ -11,6 +11,7 @@ Kubernetes是Google开源的容器集群管理系统。它构建于docker技术�
 如下图所示是我初步阅读文档和源代码之后整理的总体概览，基本上可以从如下三个维度来认识Kubernetes。
 
 ![Kubernetes概览](https://github.com/tragicjun/tragicjun.github.com/blob/master/images/Kubernetes.png)
+
 ###操作对象
 Kubernetes以RESTFul形式开放接口，用户可操作的REST对象有三个：
 - **pod**：是Kubernetes最基本的部署调度单元，可以包含container，逻辑上表示某种应用的一个实例。比如一个web站点应用由前端、后端及数据库构建而成，这三个组件将运行在各自的容器中，那么我们可以创建包含三个container的pod。

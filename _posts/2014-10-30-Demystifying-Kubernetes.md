@@ -65,13 +65,15 @@ slave(称作minion)运行两个组件：
 第一步，我们需要Kuberntes各组件的二进制可执行文件。有以下两种方式获取：
 
 - 下载源代码自己编译：
-```text
+
+```bash
 git clone https://github.com/GoogleCloudPlatform/kubernetes.git  
 cd kubernetes/build  
 ./release.sh  
 ```
 
 - 直接下载人家已经编译打包好的tar文件：
+
 ```bash
 wget https://storage.googleapis.com/kubernetes/binaries.tar.gz  
 ```
@@ -79,6 +81,7 @@ wget https://storage.googleapis.com/kubernetes/binaries.tar.gz
 自己编译源码需要先安装好golang，编译完之后在kubernetes/_output/release-tars文件夹下可以得到打包文件。直接下载的方式不需要安装其他软件，但可能得不到最新的版本。
 
 第二步，我们还需要etcd的二进制可执行文件，通过如下方式获取：
+
 ```bash
 wget https://github.com/coreos/etcd/releases/download/v0.4.6/etcd-v0.4.6-linux-amd64.tar.gz  
 tar xvf etcd-v0.4.6-linux-amd64.tar.gz  
@@ -87,11 +90,13 @@ tar xvf etcd-v0.4.6-linux-amd64.tar.gz
 第三步，就可以启动各个组件了：
 
 etcd
+
 ```bash
 cd etcd-v0.4.6-linux-amd64  
 ./etcd  
 ```
 apiserver
+
 ```bash
 ./apiserver \  
 -address=127.0.0.1 \  
@@ -104,6 +109,7 @@ apiserver
 -log_dir=./log 
 ```
 scheduler
+
 ```bash
 ./scheduler -master 127.0.0.1:8080 \  
 -v=3 \  
@@ -111,6 +117,7 @@ scheduler
 -log_dir=./log  
 ```
 kubelet
+
 ```bash
 ./kubelet \  
 -address=127.0.0.1 \  
@@ -124,6 +131,7 @@ kubelet
 ####创建pod
 
 搭好了运行环境后，就可以提交pod了。首先编写pod描述文件，保存为redis.json：
+
 ```json
 {  
   "id": "redis",  
@@ -147,6 +155,7 @@ kubelet
   }  
 }  
 ```
+
 然后，通过命令行工具kubecfg提交：
 
 ```bash
@@ -154,6 +163,7 @@ kubelet
 ```
 
 提交完后，通过kubecfg查看pod状态：
+
 ```bash
 ./kubecfg list /pods  
 ```

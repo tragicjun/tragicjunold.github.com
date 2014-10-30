@@ -95,6 +95,7 @@ etcd
 cd etcd-v0.4.6-linux-amd64  
 ./etcd  
 ```
+
 apiserver
 
 ```bash
@@ -108,6 +109,7 @@ apiserver
 -logtostderr=false \  
 -log_dir=./log 
 ```
+
 scheduler
 
 ```bash
@@ -116,6 +118,7 @@ scheduler
 -logtostderr=false \  
 -log_dir=./log  
 ```
+
 kubelet
 
 ```bash
@@ -128,6 +131,7 @@ kubelet
 -logtostderr=false \  
 -log_dir=./log  
 ```
+
 ####创建pod
 
 搭好了运行环境后，就可以提交pod了。首先编写pod描述文件，保存为redis.json：

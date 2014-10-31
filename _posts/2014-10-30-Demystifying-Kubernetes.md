@@ -177,7 +177,7 @@ kubelet
 
 提交完后，通过kubecfg查看pod状态：
 
-```bash
+```text
 # ./kubecfg list /pods
 ID                  Image(s)            Host                Labels              Status
 ----------          ----------          ----------          ----------          ----------

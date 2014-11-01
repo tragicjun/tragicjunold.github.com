@@ -240,7 +240,7 @@ ae83d1e4b1ec        dockerfile/redis:latest   "redis-server /etc/r   19 seconds 
 
 提交完后，通过kubecfg查看replicationController状态：
 
-```text
+```
 # ./kubecfg list /replicationControllers
 ID                  Image(s)            Selector            Replicas
 ----------          ----------          ----------          ----------

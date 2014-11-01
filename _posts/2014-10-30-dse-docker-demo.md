@@ -1,3 +1,9 @@
+---
+layout: post
+title: Kubernetes初探
+published: true
+---
+
 **Build image for dse**
 
 Dockerfile

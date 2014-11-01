@@ -141,6 +141,14 @@ kubelet
 -log_dir=./log  
 ```
 
+```bash
+./proxy \
+-etcd_servers=http://127.0.0.1:4001 \
+-v=3 \
+-logtostderr=false \
+-log_dir=./log
+```
+
 ####创建pod
 
 搭好了运行环境后，就可以提交pod了。首先编写pod描述文件，保存为redis.json：

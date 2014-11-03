@@ -29,7 +29,7 @@ FROM tegdsf/dse
 RUN svn checkout http://tc-svn.tencent.com/doss/doss_openapi_rep/openapi_proj/trunk/service/dse-service-demo /root/dse-service-demo
 RUN cd /root/dse-service-demo; mvn compile
 RUN mkdir /root/dse-latest/apps/demo
-RUN mv WEB-INF /root/dse-latest/apps/demo
+RUN mv /root/dse-service-demo/WEB-INF /root/dse-latest/apps/demo
 RUN rm -r /root/dse-service-demo
 RUN rm -r /tmp/mavenRepository
 ```

@@ -10,7 +10,7 @@ Dockerfile
 
 ```text
 FROM tegdsf/centos
-RUN svn checkout http://tc-svn.tencent.com/doss/doss_openapi_rep/openapi_proj/trunk/commons/DSE /root/dse-docker
+RUN svn checkout http://tc-svn.tencent.com/doss/doss_openapi_rep/openapi_proj/branches/commons/DSE/docker_1.0 /root/dse-docker
 RUN cd /root/dse-docker; mvn package
 RUN rm /root/dse-docker/release/*.tar
 RUN mkdir /root/dse-latest

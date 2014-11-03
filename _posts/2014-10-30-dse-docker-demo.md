@@ -23,6 +23,12 @@ EXPOSE 19800
 ENTRYPOINT /root/dse-latest/bin/start.sh
 ```
 
+Build command
+
+```bash
+docker build -t tegdsf/dse --no-cache-true .
+```
+
 **Build image for dse service**
 ```text
 FROM tegdsf/dse
@@ -32,4 +38,9 @@ RUN mkdir /root/dse-latest/apps/demo
 RUN mv /root/dse-service-demo/WEB-INF /root/dse-latest/apps/demo
 RUN rm -r /root/dse-service-demo
 RUN rm -r /tmp/mavenRepository
+```
+Build command
+
+```bash
+docker build -t tegdsf/dse-demo --no-cache-true . 
 ```
